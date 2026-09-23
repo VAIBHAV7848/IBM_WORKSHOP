@@ -28,21 +28,21 @@ export const VisualWorkbench: React.FC<VisualWorkbenchProps> = ({
   const [activeTab, setActiveTab] = useState<WorkbenchTab>('graph');
 
   return (
-    <div className="w-full h-full flex flex-col bg-obsidian-950 border-r border-slate-800/80 relative overflow-hidden">
+    <div className="w-full h-full flex flex-col bg-claude-bg border-r border-claude-border relative overflow-hidden">
       {/* Tab Navigation Header */}
-      <div className="h-12 border-b border-slate-800/80 px-4 flex items-center justify-between bg-obsidian-900/60 backdrop-blur-md z-10 shrink-0">
-        <div className="flex items-center space-x-1.5 bg-obsidian-950/80 p-1 rounded-xl border border-slate-800">
+      <div className="h-12 border-b border-claude-border px-4 flex items-center justify-between bg-white z-10 shrink-0">
+        <div className="flex items-center space-x-1.5 bg-claude-subtle p-1 rounded-xl border border-claude-border">
           <button
             onClick={() => setActiveTab('graph')}
             className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
               activeTab === 'graph'
-                ? 'bg-ibm-blue text-white shadow-md shadow-ibm-blue/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                ? 'bg-claude-terracotta text-white shadow-claudeOrange font-semibold'
+                : 'text-claude-muted hover:text-claude-text hover:bg-white/80'
             }`}
           >
             <Share2 className="w-3.5 h-3.5" />
             <span>2D Citation Graph</span>
-            <span className="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-white/20 text-white font-mono">
+            <span className="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-white/25 text-white font-mono font-bold">
               {dataset.papers.length}
             </span>
           </button>
@@ -51,13 +51,13 @@ export const VisualWorkbench: React.FC<VisualWorkbenchProps> = ({
             onClick={() => setActiveTab('trends')}
             className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
               activeTab === 'trends'
-                ? 'bg-ibm-cyan text-white shadow-md shadow-ibm-cyan/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                ? 'bg-claude-terracotta text-white shadow-claudeOrange font-semibold'
+                : 'text-claude-muted hover:text-claude-text hover:bg-white/80'
             }`}
           >
             <TrendingUp className="w-3.5 h-3.5" />
             <span>Emerging Trends</span>
-            <span className="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-white/20 text-white font-mono">
+            <span className="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-white/25 text-white font-mono font-bold">
               {dataset.trends.length}
             </span>
           </button>
@@ -66,28 +66,28 @@ export const VisualWorkbench: React.FC<VisualWorkbenchProps> = ({
             onClick={() => setActiveTab('gaps')}
             className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
               activeTab === 'gaps'
-                ? 'bg-purple-600 text-white shadow-md shadow-purple-600/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                ? 'bg-claude-terracotta text-white shadow-claudeOrange font-semibold'
+                : 'text-claude-muted hover:text-claude-text hover:bg-white/80'
             }`}
           >
             <Compass className="w-3.5 h-3.5" />
             <span>Citation Gaps</span>
-            <span className="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-white/20 text-white font-mono">
+            <span className="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-white/25 text-white font-mono font-bold">
               {dataset.gaps.length}
             </span>
           </button>
         </div>
 
         {/* Domain Label Indicator */}
-        <div className="hidden lg:flex items-center space-x-2 text-xs font-mono text-slate-400">
-          <Layers className="w-3.5 h-3.5 text-ibm-blue" />
+        <div className="hidden lg:flex items-center space-x-2 text-xs font-mono text-claude-muted font-medium">
+          <Layers className="w-3.5 h-3.5 text-claude-terracotta" />
           <span>Active Corpus:</span>
-          <span className="text-slate-200 font-semibold">{dataset.label}</span>
+          <span className="text-claude-text font-bold">{dataset.label}</span>
         </div>
       </div>
 
       {/* Main Tab Content */}
-      <div className="flex-1 relative overflow-hidden">
+      <div className="flex-1 relative overflow-hidden bg-claude-bg">
         {activeTab === 'graph' && (
           <>
             <CitationCanvas

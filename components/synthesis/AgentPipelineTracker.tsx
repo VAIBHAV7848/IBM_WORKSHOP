@@ -10,13 +10,13 @@ interface AgentPipelineTrackerProps {
 
 export const AgentPipelineTracker: React.FC<AgentPipelineTrackerProps> = ({ steps }) => {
   return (
-    <div className="bg-obsidian-900/80 border-b border-slate-800/80 p-3.5 space-y-2 shrink-0">
+    <div className="bg-white border-b border-claude-border p-3.5 space-y-2 shrink-0">
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2 text-[10px] font-mono uppercase tracking-wider text-slate-400 font-semibold">
-          <Activity className="w-3.5 h-3.5 text-ibm-blue" />
+        <div className="flex items-center space-x-2 text-[10px] font-mono uppercase tracking-wider text-claude-muted font-semibold">
+          <Activity className="w-3.5 h-3.5 text-claude-terracotta" />
           <span>Watsonx Multi-Agent Pipeline</span>
         </div>
-        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+        <span className="text-[10px] font-mono text-claude-orange bg-orange-50 px-2 py-0.5 rounded-full border border-orange-200 font-medium">
           Granite 3.0 Instruct
         </span>
       </div>
@@ -29,17 +29,17 @@ export const AgentPipelineTracker: React.FC<AgentPipelineTrackerProps> = ({ step
 
           switch (step.status) {
             case 'completed':
-              statusIcon = <CheckCircle2 className="w-3 h-3 text-emerald-400 shrink-0" />;
-              statusStyle = 'border-emerald-500/30 bg-emerald-500/5 text-slate-200';
+              statusIcon = <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0" />;
+              statusStyle = 'border-emerald-200 bg-emerald-50/70 text-claude-text';
               break;
             case 'running':
-              statusIcon = <Loader2 className="w-3 h-3 text-ibm-cyan animate-spin shrink-0" />;
-              statusStyle = 'border-ibm-cyan/40 bg-ibm-cyan/10 text-white shadow-sm shadow-ibm-cyan/20';
+              statusIcon = <Loader2 className="w-3 h-3 text-claude-terracotta animate-spin shrink-0" />;
+              statusStyle = 'border-claude-terracotta/40 bg-orange-50/60 text-claude-text shadow-xs ring-1 ring-claude-terracotta/20';
               break;
             case 'idle':
             default:
-              statusIcon = <CircleDot className="w-3 h-3 text-slate-600 shrink-0" />;
-              statusStyle = 'border-slate-800 bg-obsidian-950/60 text-slate-400';
+              statusIcon = <CircleDot className="w-3 h-3 text-stone-400 shrink-0" />;
+              statusStyle = 'border-claude-border bg-claude-subtle/50 text-claude-muted';
               break;
           }
 
@@ -51,16 +51,16 @@ export const AgentPipelineTracker: React.FC<AgentPipelineTrackerProps> = ({ step
               <div className="flex items-center justify-between">
                 {statusIcon}
                 {step.latencyMs ? (
-                  <span className="text-[8px] font-mono text-slate-400">
+                  <span className="text-[8px] font-mono text-claude-muted">
                     {step.latencyMs}ms
                   </span>
                 ) : null}
               </div>
               <div className="mt-1 truncate">
-                <span className="text-[10px] font-medium block leading-tight truncate">
+                <span className="text-[10px] font-medium block leading-tight truncate text-claude-text">
                   {step.name}
                 </span>
-                <span className="text-[8px] font-mono text-slate-500 block truncate">
+                <span className="text-[8px] font-mono text-claude-muted block truncate">
                   {step.agentRole}
                 </span>
               </div>

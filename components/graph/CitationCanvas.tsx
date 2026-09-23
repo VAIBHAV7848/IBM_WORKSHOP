@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { AcademicPaper, CitationLink } from '@/types/academic';
 import { useGraphPhysics, GraphNode } from './useGraphPhysics';
-import { ZoomIn, ZoomOut, RotateCcw, Crosshair, Sparkles } from 'lucide-react';
+import { ZoomIn, ZoomOut, RotateCcw, Sparkles } from 'lucide-react';
 
 interface CitationCanvasProps {
   papers: AcademicPaper[];
@@ -30,7 +30,6 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
   const panStartRef = useRef({ x: 0, y: 0 });
   const draggedNodeIdRef = useRef<string | null>(null);
 
-  // Measure container dimensions
   useEffect(() => {
     const updateDimensions = () => {
       if (containerRef.current) {
@@ -54,7 +53,6 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
     dimensions.height
   );
 
-  // Transform screen coordinate to graph canvas space
   const screenToGraph = useCallback(
     (screenX: number, screenY: number) => {
       return {
@@ -73,7 +71,6 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Handle high DPI displays
     const dpr = window.devicePixelRatio || 1;
     canvas.width = dimensions.width * dpr;
     canvas.height = dimensions.height * dpr;
@@ -83,7 +80,10 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
     const render = () => {
       ctx.save();
       ctx.scale(dpr, dpr);
-      ctx.clearRect(0, 0, dimensions.width, dimensions.height);
+      
+      // Warm Cream Canvas Background
+      ctx.fillStyle = '#FAF9F5';
+      ctx.fillRect(0, 0, dimensions.width, dimensions.height);
 
       // Apply Pan & Zoom Transform
       ctx.save();
@@ -91,10 +91,8 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
       ctx.scale(transform.scale, transform.scale);
 
       const nodes = nodesRef.current;
-      const hoveredNode = nodes.find((n) => n.id === hoveredNodeId);
-      const selectedNode = nodes.find((n) => n.id === selectedPaperId);
 
-      // Find connected neighbors of hovered or selected node
+      // Find connected neighbors of hovered node
       const connectedIds = new Set<string>();
       if (hoveredNodeId) {
         connectedIds.add(hoveredNodeId);
@@ -119,16 +117,16 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
         ctx.lineTo(targetNode.x, targetNode.y);
 
         if (isHoverConnected || isSelectedConnected) {
-          ctx.strokeStyle = 'rgba(56, 189, 248, 0.85)'; // glowing cyan
+          ctx.strokeStyle = '#D96543'; // Claude Terracotta
           ctx.lineWidth = 2.5 + strength * 0.5;
-          ctx.shadowColor = 'rgba(56, 189, 248, 0.6)';
-          ctx.shadowBlur = 10;
+          ctx.shadowColor = 'rgba(217, 101, 67, 0.4)';
+          ctx.shadowBlur = 8;
         } else if (hoveredNodeId && !connectedIds.has(sourceNode.id) && !connectedIds.has(targetNode.id)) {
-          ctx.strokeStyle = 'rgba(30, 41, 59, 0.2)'; // dimmed
+          ctx.strokeStyle = 'rgba(216, 208, 195, 0.3)';
           ctx.lineWidth = 1;
           ctx.shadowBlur = 0;
         } else {
-          ctx.strokeStyle = 'rgba(71, 85, 105, 0.4)';
+          ctx.strokeStyle = 'rgba(195, 185, 172, 0.7)';
           ctx.lineWidth = 1 + strength * 0.4;
           ctx.shadowBlur = 0;
         }
@@ -136,7 +134,7 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
         ctx.stroke();
         ctx.shadowBlur = 0;
 
-        // Draw directional citation arrow
+        // Arrowhead
         const dx = targetNode.x - sourceNode.x;
         const dy = targetNode.y - sourceNode.y;
         const angle = Math.atan2(dy, dx);
@@ -152,7 +150,7 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
         ctx.lineTo(-7, -4);
         ctx.lineTo(-7, 4);
         ctx.closePath();
-        ctx.fillStyle = isHoverConnected ? '#38bdf8' : 'rgba(100, 116, 139, 0.6)';
+        ctx.fillStyle = isHoverConnected ? '#D96543' : 'rgba(160, 150, 138, 0.8)';
         ctx.fill();
         ctx.restore();
       });
@@ -168,64 +166,63 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
         ctx.save();
         ctx.translate(node.x, node.y);
 
-        // Halo / Pulsing Glow on selected / hovered
+        // Halo / Glow on selected or hovered
         if (isSelected || isHovered) {
           ctx.beginPath();
           ctx.arc(0, 0, node.radius + 10, 0, Math.PI * 2);
           ctx.fillStyle = isSelected
-            ? 'rgba(15, 98, 254, 0.25)' // IBM blue halo
-            : 'rgba(56, 189, 248, 0.2)';
+            ? 'rgba(217, 101, 67, 0.22)' // Terracotta glow
+            : 'rgba(234, 88, 12, 0.15)';
           ctx.fill();
 
           ctx.beginPath();
           ctx.arc(0, 0, node.radius + 5, 0, Math.PI * 2);
-          ctx.strokeStyle = isSelected ? '#0f62fe' : '#38bdf8';
-          ctx.lineWidth = 2;
-          ctx.shadowColor = isSelected ? '#0f62fe' : '#38bdf8';
-          ctx.shadowBlur = 12;
+          ctx.strokeStyle = isSelected ? '#D96543' : '#EA580C';
+          ctx.lineWidth = 2.5;
+          ctx.shadowColor = '#D96543';
+          ctx.shadowBlur = 10;
           ctx.stroke();
         }
 
         // Main Node Circle
         ctx.beginPath();
         ctx.arc(0, 0, node.radius, 0, Math.PI * 2);
-        ctx.fillStyle = isDimmed ? 'rgba(30, 41, 59, 0.6)' : node.clusterColor;
-        ctx.shadowColor = node.clusterColor;
-        ctx.shadowBlur = isDimmed ? 0 : 8;
+        ctx.fillStyle = isDimmed ? 'rgba(220, 214, 204, 0.5)' : node.clusterColor;
+        ctx.shadowColor = 'rgba(31, 30, 29, 0.15)';
+        ctx.shadowBlur = isDimmed ? 0 : 6;
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // Inner border
-        ctx.strokeStyle = isSelected ? '#ffffff' : 'rgba(255, 255, 255, 0.3)';
-        ctx.lineWidth = isSelected ? 2.5 : 1.5;
+        // Border around node
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = isSelected ? 3 : 2;
         ctx.stroke();
 
         // Center dot
         ctx.beginPath();
         ctx.arc(0, 0, 3, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = '#FFFFFF';
         ctx.fill();
 
-        // Node Label (Title & Year)
+        // Node Title Label
         ctx.font = isSelected ? '600 12px sans-serif' : '500 11px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
 
-        // Title truncation
         const titleText = node.title.length > 24 ? node.title.slice(0, 22) + '…' : node.title;
-        ctx.fillStyle = isDimmed ? 'rgba(148, 163, 184, 0.4)' : '#f8fafc';
+        ctx.fillStyle = isDimmed ? 'rgba(150, 140, 130, 0.5)' : '#1F1E1D';
         ctx.fillText(titleText, 0, node.radius + 6);
 
         // Subtext: Year & Citations
         ctx.font = '10px ui-monospace, monospace';
-        ctx.fillStyle = isDimmed ? 'rgba(100, 116, 139, 0.3)' : 'rgba(148, 163, 184, 0.85)';
+        ctx.fillStyle = isDimmed ? 'rgba(180, 170, 160, 0.4)' : '#68645E';
         ctx.fillText(`${node.year} · ${node.citationsCount} cites`, 0, node.radius + 20);
 
         ctx.restore();
       });
 
-      ctx.restore(); // end pan & zoom
-      ctx.restore(); // end dpr scale
+      ctx.restore();
+      ctx.restore();
 
       animId = requestAnimationFrame(render);
     };
@@ -234,7 +231,7 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
     return () => cancelAnimationFrame(animId);
   }, [dimensions, transform, activeLinks, hoveredNodeId, selectedPaperId, highlightedTag, links]);
 
-  // Mouse / Touch Event Handlers
+  // Event Handlers
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect) return;
@@ -243,7 +240,6 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
     const screenY = e.clientY - rect.top;
     const graphPos = screenToGraph(screenX, screenY);
 
-    // Check if clicked a node
     const clickedNode = nodesRef.current.find((node) => {
       const dx = node.x - graphPos.x;
       const dy = node.y - graphPos.y;
@@ -268,13 +264,11 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
     const screenY = e.clientY - rect.top;
     const graphPos = screenToGraph(screenX, screenY);
 
-    // If dragging a node
     if (draggedNodeIdRef.current) {
       updateNodePosition(draggedNodeIdRef.current, graphPos.x, graphPos.y, true);
       return;
     }
 
-    // If panning canvas
     if (isPanning) {
       setTransform((prev) => ({
         ...prev,
@@ -284,7 +278,6 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
       return;
     }
 
-    // Hover detection
     const hovered = nodesRef.current.find((node) => {
       const dx = node.x - graphPos.x;
       const dy = node.y - graphPos.y;
@@ -308,13 +301,10 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
   const handleWheel = (e: React.WheelEvent<HTMLCanvasElement>) => {
     e.preventDefault();
     const zoomFactor = e.deltaY > 0 ? 0.92 : 1.08;
-    setTransform((prev) => {
-      const newScale = Math.max(0.4, Math.min(2.8, prev.scale * zoomFactor));
-      return {
-        ...prev,
-        scale: newScale,
-      };
-    });
+    setTransform((prev) => ({
+      ...prev,
+      scale: Math.max(0.4, Math.min(2.8, prev.scale * zoomFactor)),
+    }));
   };
 
   const handleResetView = () => {
@@ -331,12 +321,10 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full bg-obsidian-950 overflow-hidden select-none"
+      className="relative w-full h-full bg-claude-bg overflow-hidden select-none"
     >
-      {/* Dynamic Background Pattern */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
+      <div className="absolute inset-0 bg-claude-dots opacity-70 pointer-events-none" />
 
-      {/* Floating Canvas */}
       <canvas
         ref={canvasRef}
         onMouseDown={handleMouseDown}
@@ -347,51 +335,51 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
         className={`w-full h-full block ${isPanning ? 'cursor-grabbing' : 'cursor-grab'}`}
       />
 
-      {/* HUD Info Header */}
+      {/* Top HUD Info Header */}
       <div className="absolute top-3 left-4 pointer-events-none flex items-center space-x-3 text-xs">
-        <div className="bg-obsidian-900/90 border border-slate-800/80 backdrop-blur-md px-3 py-1.5 rounded-lg flex items-center space-x-2 text-slate-300">
-          <Sparkles className="w-3.5 h-3.5 text-ibm-cyan animate-pulse" />
+        <div className="bg-white/95 border border-claude-border shadow-claude backdrop-blur-md px-3 py-1.5 rounded-xl flex items-center space-x-2 text-claude-text font-mono">
+          <Sparkles className="w-3.5 h-3.5 text-claude-terracotta" />
           <span>
-            <strong className="text-white font-mono">{papers.length}</strong> Papers
+            <strong className="text-claude-text font-bold">{papers.length}</strong> Papers
           </span>
-          <span className="text-slate-600">|</span>
+          <span className="text-claude-border">|</span>
           <span>
-            <strong className="text-white font-mono">{links.length}</strong> Citation Links
+            <strong className="text-claude-text font-bold">{links.length}</strong> Citations
           </span>
-          <span className="text-slate-600">|</span>
-          <span className="text-emerald-400 font-mono">60 FPS Physics</span>
+          <span className="text-claude-border">|</span>
+          <span className="text-emerald-700 font-medium">60 FPS Physics</span>
         </div>
       </div>
 
       {/* Floating Canvas Controls */}
-      <div className="absolute bottom-4 right-4 flex items-center space-x-1.5 bg-obsidian-900/90 border border-slate-800/80 backdrop-blur-md p-1.5 rounded-xl shadow-2xl">
+      <div className="absolute bottom-4 right-4 flex items-center space-x-1.5 bg-white/95 border border-claude-border shadow-claude backdrop-blur-md p-1.5 rounded-xl">
         <button
           onClick={() => handleZoom(1.15)}
           title="Zoom In"
-          className="p-2 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-lg transition-colors"
+          className="p-2 text-claude-muted hover:text-claude-text hover:bg-claude-subtle rounded-lg transition-colors"
         >
           <ZoomIn className="w-4 h-4" />
         </button>
         <button
           onClick={() => handleZoom(0.85)}
           title="Zoom Out"
-          className="p-2 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-lg transition-colors"
+          className="p-2 text-claude-muted hover:text-claude-text hover:bg-claude-subtle rounded-lg transition-colors"
         >
           <ZoomOut className="w-4 h-4" />
         </button>
-        <div className="w-[1px] h-4 bg-slate-800" />
+        <div className="w-[1px] h-4 bg-claude-border" />
         <button
           onClick={handleResetView}
           title="Reset Center"
-          className="p-2 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-lg transition-colors"
+          className="p-2 text-claude-muted hover:text-claude-text hover:bg-claude-subtle rounded-lg transition-colors"
         >
           <RotateCcw className="w-4 h-4" />
         </button>
       </div>
 
       {/* Cluster Legend */}
-      <div className="absolute bottom-4 left-4 bg-obsidian-900/80 border border-slate-800/80 backdrop-blur-md p-2.5 rounded-xl text-xs flex flex-col space-y-1.5 max-w-[280px]">
-        <div className="text-[10px] uppercase font-mono tracking-wider text-slate-400 font-semibold">
+      <div className="absolute bottom-4 left-4 bg-white/95 border border-claude-border shadow-claude backdrop-blur-md p-2.5 rounded-xl text-xs flex flex-col space-y-1.5 max-w-[280px]">
+        <div className="text-[10px] uppercase font-mono tracking-wider text-claude-muted font-bold">
           Topic Clusters
         </div>
         <div className="flex flex-wrap gap-2">
@@ -400,10 +388,10 @@ export const CitationCanvas: React.FC<CitationCanvasProps> = ({
             return (
               <div key={clusterName} className="flex items-center space-x-1.5">
                 <span
-                  className="w-2.5 h-2.5 rounded-full"
-                  style={{ backgroundColor: paper?.clusterColor || '#38bdf8' }}
+                  className="w-2.5 h-2.5 rounded-full shadow-sm"
+                  style={{ backgroundColor: paper?.clusterColor || '#D96543' }}
                 />
-                <span className="text-[11px] text-slate-300 truncate max-w-[140px]">
+                <span className="text-[11px] text-claude-textSecondary truncate max-w-[140px] font-medium">
                   {clusterName}
                 </span>
               </div>

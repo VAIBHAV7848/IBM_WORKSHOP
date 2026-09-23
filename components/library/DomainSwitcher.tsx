@@ -27,7 +27,7 @@ export const DomainSwitcher: React.FC<DomainSwitcherProps> = ({
 
   return (
     <div className="space-y-1.5">
-      <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-semibold px-1">
+      <div className="text-[10px] font-mono uppercase tracking-wider text-claude-muted font-semibold px-1">
         Corpus Domain Presets
       </div>
       <div className="grid grid-cols-1 gap-1.5">
@@ -39,16 +39,18 @@ export const DomainSwitcher: React.FC<DomainSwitcherProps> = ({
             <button
               key={opt.key}
               onClick={() => onSelectDomain(opt.key)}
-              className={`w-full flex items-center justify-between p-2 rounded-xl text-left transition-all ${
+              className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all ${
                 isSelected
-                  ? 'bg-ibm-blue text-white shadow-md shadow-ibm-blue/20'
-                  : 'bg-obsidian-900/80 text-slate-300 hover:bg-slate-800/60 border border-slate-800/80'
+                  ? 'bg-claude-terracotta text-white shadow-claudeOrange'
+                  : 'bg-white text-claude-text hover:bg-claude-subtle border border-claude-border'
               }`}
             >
               <div className="flex items-center space-x-2.5 min-w-0">
                 <div
                   className={`p-1.5 rounded-lg ${
-                    isSelected ? 'bg-white/20 text-white' : 'bg-slate-800 text-slate-400'
+                    isSelected
+                      ? 'bg-white/20 text-white'
+                      : 'bg-claude-subtle text-claude-terracotta'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -60,10 +62,10 @@ export const DomainSwitcher: React.FC<DomainSwitcherProps> = ({
                 </div>
               </div>
               <span
-                className={`text-[9px] font-mono px-1.5 py-0.5 rounded-full uppercase shrink-0 ${
+                className={`text-[9px] font-mono px-2 py-0.5 rounded-full uppercase shrink-0 font-medium ${
                   isSelected
                     ? 'bg-white/25 text-white'
-                    : 'bg-slate-800 text-slate-400'
+                    : 'bg-claude-orangeLight text-claude-terracotta border border-claude-orangeBorder'
                 }`}
               >
                 {opt.badge}

@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --background: #04070d;
-  --foreground: #f1f5f9;
+  --background: #FAF9F5;
+  --foreground: #1F1E1D;
+  --claude-terracotta: #D96543;
 }
 
 body {
@@ -12,42 +13,44 @@ body {
   background: var(--background);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Scrollbars */
+/* Claude Custom Warm Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #070c18;
+  background: #F4EFEA;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 3px;
+  background: #D8D0C3;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #BFB5A5;
 }
 
-/* Neon Glow utilities */
-.glow-cyan {
-  box-shadow: 0 0 20px -5px rgba(56, 189, 248, 0.4);
+/* Claude Orange & Terracotta Glows */
+.glow-orange {
+  box-shadow: 0 0 20px -3px rgba(217, 101, 67, 0.3);
 }
-.glow-purple {
-  box-shadow: 0 0 20px -5px rgba(168, 85, 247, 0.4);
-}
-.glow-emerald {
-  box-shadow: 0 0 20px -5px rgba(16, 185, 129, 0.4);
-}
-.glow-ibm {
-  box-shadow: 0 0 25px -5px rgba(15, 98, 254, 0.5);
+.glow-subtle {
+  box-shadow: 0 2px 12px -2px rgba(31, 30, 29, 0.06);
 }
 
-/* Subtle grid background */
-.bg-grid-pattern {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+/* Claude warm subtle dotted grid pattern */
+.bg-claude-dots {
+  background-color: #FAF9F5;
+  background-image: radial-gradient(#E2DAD0 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Warm card styling */
+.claude-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E7E1D7;
+  box-shadow: 0 1px 3px rgba(31, 30, 29, 0.04);
 }

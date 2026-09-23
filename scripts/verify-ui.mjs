@@ -109,9 +109,9 @@ async function runVerification() {
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '05_paper_detail_drawer.png') });
     console.log('   📸 Captured 05_paper_detail_drawer.png');
 
-    // 9. Test "Synthesize with IBM Granite Agent" button
-    console.log('9️⃣ Testing "Synthesize with IBM Granite Agent"...');
-    await clickByText(page, 'button', 'Synthesize with IBM Granite Agent');
+    // 9. Test "Synthesize with Research Agent" button
+    console.log('9️⃣ Testing "Synthesize with Research Agent"...');
+    await clickByText(page, 'button', 'Synthesize with Research Agent');
     console.log('   Waiting for Granite RAG response generation...');
     await new Promise((r) => setTimeout(r, 2200));
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '06_chat_synthesis.png') });

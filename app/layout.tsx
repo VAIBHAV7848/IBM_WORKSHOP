@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "IBM LangFlow Research Agent | Autonomous Literature Review & Citation Studio",
-  description: "Agentic AI Research Companion for academic synthesis, 2D citation graph exploration, and literature discovery powered by IBM Granite.",
+  title: "Research Agent Studio | Claude Terracotta Edition",
+  description: "Autonomous Academic Research Companion powered by IBM Granite & Groq LPUs.",
 };
 
 export default function RootLayout({
@@ -12,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark h-full">
-      <body className="h-full bg-obsidian-950 text-slate-100 antialiased selection:bg-ibm-blue selection:text-white">
+    <html lang="en" className="h-full">
+      <body className="h-full bg-claude-bg text-claude-text antialiased selection:bg-claude-terracotta selection:text-white">
         {children}
       </body>
     </html>

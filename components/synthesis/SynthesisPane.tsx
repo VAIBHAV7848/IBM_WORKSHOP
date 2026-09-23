@@ -41,22 +41,22 @@ export const SynthesisPane: React.FC<SynthesisPaneProps> = ({
   const [isExportOpen, setIsExportOpen] = useState(false);
 
   return (
-    <div className="w-full h-full flex flex-col bg-obsidian-950 overflow-hidden">
+    <div className="w-full h-full flex flex-col bg-white overflow-hidden">
       {/* 1. Multi-Agent Pipeline Status */}
       <AgentPipelineTracker steps={steps} />
 
       {/* 2. Sub-Tab Switcher */}
-      <div className="h-10 border-b border-slate-800/80 px-3 flex items-center justify-between bg-obsidian-900/40 shrink-0">
+      <div className="h-10 border-b border-claude-border px-3 flex items-center justify-between bg-claude-subtle/60 shrink-0">
         <div className="flex space-x-1">
           <button
             onClick={() => setActiveTab('chat')}
             className={`flex items-center space-x-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-all ${
               activeTab === 'chat'
-                ? 'bg-slate-800 text-white font-semibold'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                ? 'bg-white text-claude-text font-semibold shadow-xs border border-claude-border'
+                : 'text-claude-muted hover:text-claude-text hover:bg-white/60'
             }`}
           >
-            <MessageSquare className="w-3.5 h-3.5 text-ibm-cyan" />
+            <MessageSquare className="w-3.5 h-3.5 text-claude-terracotta" />
             <span>Granite RAG Chat</span>
           </button>
 
@@ -64,19 +64,19 @@ export const SynthesisPane: React.FC<SynthesisPaneProps> = ({
             onClick={() => setActiveTab('review')}
             className={`flex items-center space-x-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-all ${
               activeTab === 'review'
-                ? 'bg-slate-800 text-white font-semibold'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                ? 'bg-white text-claude-text font-semibold shadow-xs border border-claude-border'
+                : 'text-claude-muted hover:text-claude-text hover:bg-white/60'
             }`}
           >
-            <BookOpen className="w-3.5 h-3.5 text-ibm-blue" />
+            <BookOpen className="w-3.5 h-3.5 text-claude-orange" />
             <span>Literature Review</span>
             {review && (
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             )}
           </button>
         </div>
 
-        <span className="text-[10px] font-mono text-slate-500 hidden sm:inline">
+        <span className="text-[10px] font-mono text-claude-muted hidden sm:inline">
           RAG Corpus: {dataset.papers.length} Papers
         </span>
       </div>

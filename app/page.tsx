@@ -285,7 +285,7 @@ export default function ResearchStudioPage() {
   );
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden bg-obsidian-950 text-slate-100 font-sans">
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-claude-bg text-claude-text font-sans selection:bg-claude-terracotta-light selection:text-claude-terracotta">
       {/* 1. Global Header */}
       <StudioHeader
         activeDomain={activeDomain}
@@ -297,7 +297,7 @@ export default function ResearchStudioPage() {
       {/* 2. Main 3-Pane Responsive Layout */}
       <main className="flex-1 flex overflow-hidden">
         {/* PANE 1: Left Academic Corpus Library */}
-        <aside className="w-80 min-w-[280px] max-w-[340px] h-full shrink-0 hidden md:block">
+        <aside className="w-80 min-w-[280px] max-w-[340px] h-full shrink-0 hidden md:block border-r border-claude-border">
           <SourceLibraryPane
             dataset={dataset}
             activeDomain={activeDomain}
@@ -324,7 +324,7 @@ export default function ResearchStudioPage() {
         </section>
 
         {/* PANE 3: Right Multi-Agent Synthesis Workbench */}
-        <aside className="w-[420px] min-w-[360px] max-w-[480px] h-full shrink-0 border-l border-slate-800/80 hidden lg:block">
+        <aside className="w-[420px] min-w-[360px] max-w-[480px] h-full shrink-0 border-l border-claude-border bg-white hidden lg:block">
           <SynthesisPane
             dataset={dataset}
             steps={steps}

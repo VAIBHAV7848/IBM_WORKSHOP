@@ -11,28 +11,31 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        obsidian: {
-          950: "#04070d",
-          900: "#070c18",
-          850: "#0a1122",
-          800: "#0f172a",
-          700: "#1e293b",
-          600: "#334155",
-        },
-        ibm: {
-          blue: "#0f62fe",
-          cyan: "#1192e8",
-          teal: "#009d9a",
-          purple: "#8a3ffc",
-          dark: "#161616",
+        claude: {
+          bg: "#FAF9F5",
+          surface: "#FFFFFF",
+          subtle: "#F4EFEA",
+          mutedBg: "#EFE9E1",
+          border: "#E7E1D7",
+          borderDark: "#D8D0C3",
+          terracotta: "#D96543",
+          terracottaHover: "#C45535",
+          orange: "#EA580C",
+          orangeLight: "#FDF2EC",
+          orangeBorder: "#F6D8C9",
+          text: "#1F1E1D",
+          textSecondary: "#45423E",
+          muted: "#736F68",
         },
       },
       fontFamily: {
+        serif: ["Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
       },
-      animation: {
-        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "spin-slow": "spin 12s linear infinite",
+      boxShadow: {
+        claude: "0 1px 3px rgba(31, 30, 29, 0.05), 0 8px 24px -4px rgba(31, 30, 29, 0.04)",
+        claudeLg: "0 4px 6px -1px rgba(31, 30, 29, 0.05), 0 20px 30px -4px rgba(31, 30, 29, 0.08)",
+        claudeOrange: "0 4px 14px -2px rgba(217, 101, 67, 0.35)",
       },
     },
   },

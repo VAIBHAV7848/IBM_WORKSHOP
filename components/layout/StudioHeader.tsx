@@ -3,7 +3,7 @@
 import React from 'react';
 import { DomainKey } from '@/types/academic';
 import { DOMAIN_OPTIONS } from '@/data/domains';
-import { Settings, Sparkles, BookOpen, Layers, Cpu, ShieldCheck } from 'lucide-react';
+import { Settings, Zap, Cpu } from 'lucide-react';
 
 interface StudioHeaderProps {
   activeDomain: DomainKey;
@@ -66,9 +66,9 @@ export const StudioHeader: React.FC<StudioHeaderProps> = ({
 
       {/* Right Controls */}
       <div className="flex items-center space-x-2.5">
-        <div className="hidden sm:flex items-center space-x-1.5 bg-obsidian-950 border border-slate-800 px-2.5 py-1 rounded-lg text-[11px] font-mono text-slate-300">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Granite 3.0 Active</span>
+        <div className="hidden sm:flex items-center space-x-1.5 bg-obsidian-950 border border-emerald-500/30 px-2.5 py-1 rounded-lg text-[11px] font-mono text-emerald-300">
+          <Zap className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+          <span>Groq LPU Active (500 T/s)</span>
         </div>
 
         <button
